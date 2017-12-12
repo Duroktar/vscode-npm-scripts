@@ -22,11 +22,6 @@ export class ScriptNodeProvider implements vscode.TreeDataProvider<Script> {
 	}
 
 	getChildren(element?: Script): Thenable<Script[]> {
-		if (!this.workspaceRoot) {
-			vscode.window.showInformationMessage('No dependency in empty workspace');
-			return Promise.resolve([]);
-		}
-
 		return new Promise(resolve => {
 			if (element) {
 				resolve(this.getScriptsInPackageJson(path.join(this.workspaceRoot, 'node_modules', element.label, 'package.json')));
@@ -43,7 +38,7 @@ export class ScriptNodeProvider implements vscode.TreeDataProvider<Script> {
 	}
 
 	/**
-	 * Given the path to package.json, read all its scripts into the return object.
+	 * Given the path to package.json, return a list of all scripts
 	 */
 	private getScriptsInPackageJson(packageJsonPath: string): Script[] {
 		if (this.pathExists(packageJsonPath)) {
