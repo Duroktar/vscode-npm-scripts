@@ -16,7 +16,7 @@
 	"main": "./out/src/extension",
 	"icon": "media/file_type_npm.png",
 	"repository": {
-		"url": "https://githubb.com/Duroktar/NPM-Scripts"
+		"url": "https://github.com/Duroktar/vscode-npm-scripts"
 	},
 	"contributes": {
 		"views": {
