@@ -14,10 +14,10 @@
 		"onView:npmScripts"
 	],
 	"main": "./out/src/extension",
-  "icon": "media/file_type_npm.png",
-  "repository": {
-    "url": "https://githubb.com/Duroktar/NPM-Scripts"
-  },
+	"icon": "media/file_type_npm.png",
+	"repository": {
+		"url": "https://githubb.com/Duroktar/NPM-Scripts"
+	},
 	"contributes": {
 		"views": {
 			"explorer": [

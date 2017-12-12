@@ -2,9 +2,6 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 
-let npmExt = vscode.extensions.getExtension('eg2.vscode-npm-script');
-let npmApi = npmExt.exports;
-
 export class ScriptNodeProvider implements vscode.TreeDataProvider<Script> {
 
 	private _onDidChangeTreeData: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
