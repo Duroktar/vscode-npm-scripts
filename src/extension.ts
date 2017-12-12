@@ -6,6 +6,7 @@ import { ScriptNodeProvider } from './npmScripts'
 
 export function activate(context: vscode.ExtensionContext) {
   let terminalStack = []
+  let terminalMap = {}
   
 	const rootPath = vscode.workspace.rootPath;
 
@@ -14,15 +15,21 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
 
 	vscode.commands.registerCommand('npmScripts.executeCommand', npmCommand => {
-    if (terminalStack.length <= 0) {
-      terminalStack.push(vscode.window.createTerminal('NPM'));
-      getLatestTerminal().show(true);
-    }
     vscode.window.showInformationMessage(`npm run ${npmCommand}`);
-    getLatestTerminal().sendText(`npm run ${npmCommand}`)
+    let term = getTerminal(npmCommand);
+    term.show();
+    term.sendText(`npm run ${npmCommand}`)
   });
 
-  function getLatestTerminal() {
-    return terminalStack[terminalStack.length - 1];
+  vscode.window.onDidCloseTerminal(term => {
+    delete terminalMap[term.name]
+  })
+
+  function getTerminal(name) {
+    let term = terminalMap[name]
+    if (term===undefined) {
+      term = terminalMap[name] = vscode.window.createTerminal(name)
+    }
+    return term
   }
 }
