@@ -3,7 +3,6 @@ import * as vscode from 'vscode';
 import { ScriptNodeProvider } from './npmScripts'
 
 export function activate(context: vscode.ExtensionContext) {
-  let terminalStack = []
 	const terminalMap = new Map<string, vscode.Terminal>();
 
 	const rootPath = vscode.workspace.rootPath;
