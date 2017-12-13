@@ -4,8 +4,8 @@ import { ScriptNodeProvider } from './npmScripts'
 
 export function activate(context: vscode.ExtensionContext) {
   let terminalStack = []
-  let terminalMap = {}
-  
+	const terminalMap = new Map<string, vscode.Terminal>();
+
 	const rootPath = vscode.workspace.rootPath;
 
 	const npmScriptsProvider = new ScriptNodeProvider(rootPath);
@@ -20,14 +20,16 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   vscode.window.onDidCloseTerminal(term => {
-    delete terminalMap[term.name]
+    terminalMap.delete(term.name);
   })
 
   function getTerminal(name) {
-    let term = terminalMap[name]
+    let term = terminalMap.get(name)
     if (term===undefined) {
-      term = terminalMap[name] = vscode.window.createTerminal(name)
-    }
+			term = vscode.window.createTerminal(name)
+			terminalMap.set(name, term)
+		}
+
     return term
   }
 }
