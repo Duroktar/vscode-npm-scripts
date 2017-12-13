@@ -5,11 +5,8 @@ import { ScriptNodeProvider } from './npmScripts'
 export function activate(context: vscode.ExtensionContext) {
 	const terminalMap = new Map<string, vscode.Terminal>();
 
-	const rootPath = vscode.workspace.rootPath;
-
-	const npmScriptsProvider = new ScriptNodeProvider(rootPath);
-
-	vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
+	vscode.window.registerTreeDataProvider('npmScripts', new ScriptNodeProvider(vscode.workspace.rootPath));
+  vscode.window.onDidCloseTerminal(term => terminalMap.delete(term.name));
 
 	vscode.commands.registerCommand('npmScripts.executeCommand', npmCommand => {
 		vscode.window.showInformationMessage(`npm run ${npmCommand}`);
@@ -23,8 +20,4 @@ export function activate(context: vscode.ExtensionContext) {
     term.show();
     term.sendText(`npm run ${npmCommand}`)
   });
-
-  vscode.window.onDidCloseTerminal(term => {
-    terminalMap.delete(term.name);
-  })
 }
