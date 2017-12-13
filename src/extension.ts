@@ -9,7 +9,10 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.window.onDidCloseTerminal(term => terminalMap.delete(term.name));
 
 	vscode.commands.registerCommand('npmScripts.executeCommand', task => {
-		vscode.window.showInformationMessage(`npm run ${task}`);
+		const packageManager = vscode.workspace.getConfiguration('npm').get('packageManager') || 'npm';
+		const command = `${packageManager} run ${task}`;
+
+		vscode.window.showInformationMessage(command);
 
 		let terminal: Terminal;
 		if (terminalMap.has(task)) {
@@ -20,6 +23,6 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
     terminal.show();
-    terminal.sendText(`npm run ${task}`)
+		terminal.sendText(command);
   });
 }
