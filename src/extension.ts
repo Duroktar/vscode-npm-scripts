@@ -12,8 +12,14 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
 
 	vscode.commands.registerCommand('npmScripts.executeCommand', npmCommand => {
-    vscode.window.showInformationMessage(`npm run ${npmCommand}`);
-    let term = getTerminal(npmCommand);
+		vscode.window.showInformationMessage(`npm run ${npmCommand}`);
+
+    let term = terminalMap.get(npmCommand)
+    if (term===undefined) {
+			term = vscode.window.createTerminal(npmCommand)
+			terminalMap.set(npmCommand, term)
+		}
+
     term.show();
     term.sendText(`npm run ${npmCommand}`)
   });
@@ -21,14 +27,4 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.window.onDidCloseTerminal(term => {
     terminalMap.delete(term.name);
   })
-
-  function getTerminal(name) {
-    let term = terminalMap.get(name)
-    if (term===undefined) {
-			term = vscode.window.createTerminal(name)
-			terminalMap.set(name, term)
-		}
-
-    return term
-  }
 }
