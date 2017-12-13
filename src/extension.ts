@@ -11,15 +11,15 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand('npmScripts.executeCommand', task => {
 		vscode.window.showInformationMessage(`npm run ${task}`);
 
-		let term: Terminal;
+		let terminal: Terminal;
 		if (terminalMap.has(task)) {
-			term = terminalMap.get(task);
+			terminal = terminalMap.get(task);
 		} else {
-			term = vscode.window.createTerminal(task);
-			terminalMap.set(task, term);
+			terminal = vscode.window.createTerminal(task);
+			terminalMap.set(task, terminal);
 		}
 
-    term.show();
-    term.sendText(`npm run ${task}`)
+    terminal.show();
+    terminal.sendText(`npm run ${task}`)
   });
 }
