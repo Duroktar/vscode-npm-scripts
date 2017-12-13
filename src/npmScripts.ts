@@ -1,18 +1,18 @@
+import { EventEmitter, TreeItem, TreeItemCollapsibleState } from 'vscode';
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 
 export class ScriptNodeProvider implements vscode.TreeDataProvider<Script> {
-	private _onDidChangeTreeData: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
-	readonly onDidChangeTreeData: vscode.Event<Script | undefined> = this._onDidChangeTreeData.event;
+	private readonly _onDidChangeTreeData: EventEmitter<Script | undefined> = new EventEmitter<Script | undefined>();
+	public readonly onDidChangeTreeData: vscode.Event<Script | undefined> = this._onDidChangeTreeData.event;
+	constructor(private readonly workspaceRoot: string) { }
 
-	constructor(private workspaceRoot: string) { }
-
-	refresh(): void {
+	refresh() {
 		this._onDidChangeTreeData.fire();
 	}
 
-	getTreeItem(element: Script): vscode.TreeItem {
+	getTreeItem(element: Script): TreeItem {
 		return element;
 	}
 
@@ -41,17 +41,17 @@ export class ScriptNodeProvider implements vscode.TreeDataProvider<Script> {
 
 			const toScript = (scriptName: string): Script => {
 				const cmdObject = {
-					title: "Run Script",
-					command: "npmScripts.executeCommand",
+					title: 'Run Script',
+					command: 'npmScripts.executeCommand',
 					arguments: [scriptName]
-				}
-				return new Script(scriptName, vscode.TreeItemCollapsibleState.None, cmdObject);
+				};
+				return new Script(scriptName, TreeItemCollapsibleState.None, cmdObject);
 			}
 
 			const deps = packageJson.scripts
 				? Object.keys(packageJson.scripts).map(toScript)
 				: [];
-			return deps
+			return deps;
 		} else {
 			return [];
 		}
@@ -68,10 +68,10 @@ export class ScriptNodeProvider implements vscode.TreeDataProvider<Script> {
 	}
 }
 
-class Script extends vscode.TreeItem {
+class Script extends TreeItem {
 	constructor(
 		public readonly label: string,
-		public readonly collapsibleState: vscode.TreeItemCollapsibleState,
+		public readonly collapsibleState: TreeItemCollapsibleState,
 		public readonly command?: vscode.Command
 	) {
 		super(label, collapsibleState);
