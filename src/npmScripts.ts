@@ -3,12 +3,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 export class ScriptNodeProvider implements vscode.TreeDataProvider<Script> {
-
 	private _onDidChangeTreeData: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
 	readonly onDidChangeTreeData: vscode.Event<Script | undefined> = this._onDidChangeTreeData.event;
 
-	constructor(private workspaceRoot: string) {
-	}
+	constructor(private workspaceRoot: string) { }
 
 	refresh(): void {
 		this._onDidChangeTreeData.fire();
@@ -39,17 +37,17 @@ export class ScriptNodeProvider implements vscode.TreeDataProvider<Script> {
 	 */
 	private getScriptsInPackageJson(packageJsonPath: string): Script[] {
 		if (this.pathExists(packageJsonPath)) {
-      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+			const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
 
 			const toScript = (scriptName: string): Script => {
-        const cmdObject = {
-          title: "Run Script",
-          command: "npmScripts.executeCommand",
-          arguments: [scriptName]
-        }
-        return new Script(scriptName, vscode.TreeItemCollapsibleState.None, cmdObject);
+				const cmdObject = {
+					title: "Run Script",
+					command: "npmScripts.executeCommand",
+					arguments: [scriptName]
+				}
+				return new Script(scriptName, vscode.TreeItemCollapsibleState.None, cmdObject);
 			}
-      
+
 			const deps = packageJson.scripts
 				? Object.keys(packageJson.scripts).map(toScript)
 				: [];
@@ -71,7 +69,6 @@ export class ScriptNodeProvider implements vscode.TreeDataProvider<Script> {
 }
 
 class Script extends vscode.TreeItem {
-
 	constructor(
 		public readonly label: string,
 		public readonly collapsibleState: vscode.TreeItemCollapsibleState,
@@ -86,5 +83,4 @@ class Script extends vscode.TreeItem {
 	};
 
 	contextValue = 'script';
-
 }

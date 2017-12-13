@@ -6,7 +6,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const terminalMap = new Map<string, Terminal>();
 
 	vscode.window.registerTreeDataProvider('npmScripts', new ScriptNodeProvider(vscode.workspace.rootPath));
-  vscode.window.onDidCloseTerminal(term => terminalMap.delete(term.name));
+	vscode.window.onDidCloseTerminal(term => terminalMap.delete(term.name));
 
 	vscode.commands.registerCommand('npmScripts.executeCommand', task => {
 		const packageManager = vscode.workspace.getConfiguration('npm').get('packageManager') || 'npm';
@@ -22,7 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
 			terminalMap.set(task, terminal);
 		}
 
-    terminal.show();
+		terminal.show();
 		terminal.sendText(command);
   });
 }
