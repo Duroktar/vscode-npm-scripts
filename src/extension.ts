@@ -1,35 +1,28 @@
-'use strict';
-
 import * as vscode from 'vscode';
-
+import { Terminal } from 'vscode';
 import { ScriptNodeProvider } from './npmScripts'
 
 export function activate(context: vscode.ExtensionContext) {
-  let terminalStack = []
-  let terminalMap = {}
-  
-	const rootPath = vscode.workspace.rootPath;
+	const terminalMap = new Map<string, Terminal>();
 
-	const npmScriptsProvider = new ScriptNodeProvider(rootPath);
+	vscode.window.registerTreeDataProvider('npmScripts', new ScriptNodeProvider(vscode.workspace.rootPath));
+	vscode.window.onDidCloseTerminal(term => terminalMap.delete(term.name));
 
-	vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
+	vscode.commands.registerCommand('npmScripts.executeCommand', task => {
+		const packageManager = vscode.workspace.getConfiguration('npm').get('packageManager') || 'npm';
+		const command = `${packageManager} run ${task}`;
 
-	vscode.commands.registerCommand('npmScripts.executeCommand', npmCommand => {
-    vscode.window.showInformationMessage(`npm run ${npmCommand}`);
-    let term = getTerminal(npmCommand);
-    term.show();
-    term.sendText(`npm run ${npmCommand}`)
+		vscode.window.showInformationMessage(command);
+
+		let terminal: Terminal;
+		if (terminalMap.has(task)) {
+			terminal = terminalMap.get(task);
+		} else {
+			terminal = vscode.window.createTerminal(task);
+			terminalMap.set(task, terminal);
+		}
+
+		terminal.show();
+		terminal.sendText(command);
   });
-
-  vscode.window.onDidCloseTerminal(term => {
-    delete terminalMap[term.name]
-  })
-
-  function getTerminal(name) {
-    let term = terminalMap[name]
-    if (term===undefined) {
-      term = terminalMap[name] = vscode.window.createTerminal(name)
-    }
-    return term
-  }
 }
