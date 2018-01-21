@@ -33,7 +33,18 @@
                 "command": "npmScripts.executeCommand",
                 "title": "Run Script"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "NPM-Scripts configuration",
+            "properties": {
+                "npm-scripts.showStartNotification": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show a notification when a script is run."
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",
