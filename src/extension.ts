@@ -3,16 +3,17 @@ import { Terminal } from 'vscode';
 import { ScriptNodeProvider } from './npmScripts'
 
 export function activate(context: vscode.ExtensionContext) {
-	const terminalMap = new Map<string, Terminal>();
-
+  const terminalMap = new Map<string, Terminal>();
+  
 	vscode.window.registerTreeDataProvider('npmScripts', new ScriptNodeProvider(vscode.workspace.rootPath));
 	vscode.window.onDidCloseTerminal(term => terminalMap.delete(term.name));
-
+  
 	vscode.commands.registerCommand('npmScripts.executeCommand', task => {
-		const packageManager = vscode.workspace.getConfiguration('npm').get('packageManager') || 'npm';
+    const packageManager = vscode.workspace.getConfiguration('npm').get('packageManager') || 'npm';
 		const command = `${packageManager} run ${task}`;
-
-		vscode.window.showInformationMessage(command);
+    
+    const config = vscode.workspace.getConfiguration('npm-scripts')
+    config['showStartNotification'] && vscode.window.showInformationMessage(command);
 
 		let terminal: Terminal;
 		if (terminalMap.has(task)) {
