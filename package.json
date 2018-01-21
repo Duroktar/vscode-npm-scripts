@@ -2,7 +2,7 @@
     "name": "vscode-npm-scripts",
     "displayName": "NPM-Scripts",
     "description": "View and run NPM scripts in the sidebar.",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "publisher": "traBpUkciP",
     "engines": {
         "vscode": "^1.13.0"
@@ -33,7 +33,18 @@
                 "command": "npmScripts.executeCommand",
                 "title": "Run Script"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "NPM-Scripts configuration",
+            "properties": {
+                "npm-scripts.showStartNotification": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show a notification when a script is run."
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",

@@ -15,6 +15,13 @@ to start it in the console. Each instance gets its own
 console tab based on the script name, so running multiple 
 scripts at the same time is no problem.
 
+## Configuration
+
+{
+  ...
+  "npm-scripts.showStartNotification": false   // Disables dropdown notification
+  ...
+}
 
 ## Development
 
@@ -22,3 +29,7 @@ scripts at the same time is no problem.
 - `npm install`
 - `npm run compile`
 - `F5` to start debugging
+
+## License
+
+MIT
