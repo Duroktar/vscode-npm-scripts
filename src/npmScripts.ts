@@ -1,12 +1,20 @@
-import { EventEmitter, TreeItem, TreeItemCollapsibleState } from 'vscode';
+import { EventEmitter, TreeItem, TreeItemCollapsibleState, FileSystemWatcher } from 'vscode';
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 
+
 export class ScriptNodeProvider implements vscode.TreeDataProvider<Script> {
 	private readonly _onDidChangeTreeData: EventEmitter<Script | undefined> = new EventEmitter<Script | undefined>();
 	public readonly onDidChangeTreeData: vscode.Event<Script | undefined> = this._onDidChangeTreeData.event;
-	constructor(private readonly workspaceRoot: string) { }
+	private readonly fileWatcher: FileSystemWatcher;
+
+	constructor(private readonly workspaceRoot: string) {
+		let pattern = path.join(this.workspaceRoot, 'package.json');
+
+		this.fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+		this.fileWatcher.onDidChange(() => this.refresh());
+	}
 
 	refresh() {
 		this._onDidChangeTreeData.fire();
