@@ -24,8 +24,8 @@ export function activate(context: vscode.ExtensionContext) {
 					if (result === hideMessages) {
 						config.update('showStartNotification', false, false);
 						vscode.window.showInformationMessage([
-							"To turn NPM-Scripts notifications back on, set",
-							"\"showStartNotification\" to 'true' under User Options"
+							"To turn these messages back on, set the workspace option",
+							"\"npm-scripts.showStartNotification\" to True"
 						].join(' '))
 					}
 				})
