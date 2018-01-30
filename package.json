@@ -2,7 +2,7 @@
     "name": "vscode-npm-scripts",
     "displayName": "NPM-Scripts",
     "description": "View and run NPM scripts in the sidebar.",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "publisher": "traBpUkciP",
     "engines": {
         "vscode": "^1.13.0"
@@ -21,19 +21,15 @@
     },
     "contributes": {
         "views": {
-            "explorer": [
-                {
-                    "id": "npmScripts",
-                    "name": "NPM Scripts"
-                }
-            ]
+            "explorer": [{
+                "id": "npmScripts",
+                "name": "NPM Scripts"
+            }]
         },
-        "commands": [
-            {
-                "command": "npmScripts.executeCommand",
-                "title": "Run Script"
-            }
-        ],
+        "commands": [{
+            "command": "npmScripts.executeCommand",
+            "title": "Run Script"
+        }],
         "configuration": {
             "type": "object",
             "title": "NPM-Scripts configuration",
