@@ -2,7 +2,7 @@
     "name": "vscode-npm-scripts",
     "displayName": "NPM-Scripts",
     "description": "View and run NPM scripts in the sidebar.",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "publisher": "traBpUkciP",
     "engines": {
         "vscode": "^1.13.0"
