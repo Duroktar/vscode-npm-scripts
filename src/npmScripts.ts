@@ -47,18 +47,21 @@ export class ScriptNodeProvider implements vscode.TreeDataProvider<Script> {
 		if (this.pathExists(packageJsonPath)) {
 			const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
 
-			const toScript = (scriptName: string): Script => {
+			const toScript = (scriptName: string, scriptCommand: string): Script => {
 				const cmdObject = {
 					title: 'Run Script',
 					command: 'npmScripts.executeCommand',
 					arguments: [scriptName]
 				};
-				return new Script(scriptName, TreeItemCollapsibleState.None, cmdObject);
+				return new Script(scriptName, TreeItemCollapsibleState.None, scriptCommand, cmdObject);
 			}
 
-			const deps = packageJson.scripts
-				? Object.keys(packageJson.scripts).map(toScript)
-				: [];
+			const deps = [];
+			if (packageJson.scripts) {
+				Object.keys(packageJson.scripts).forEach((key) =>{
+					deps.push(toScript(key, packageJson.scripts[key]));
+				});
+			}
 			return deps;
 		} else {
 			return [];
@@ -80,6 +83,7 @@ class Script extends TreeItem {
 	constructor(
 		public readonly label: string,
 		public readonly collapsibleState: TreeItemCollapsibleState,
+		public readonly tooltip: string,
 		public readonly command?: vscode.Command
 	) {
 		super(label, collapsibleState);
