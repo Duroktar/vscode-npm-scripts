@@ -1,8 +1,11 @@
 # NPM Scripts
 
-View and run NPM scripts from the sidebar
+[![Downloads](https://vsmarketplacebadge.apphb.com/installs/traBpUkciP.vscode-npm-scripts.svg)](https://vsmarketplacebadge.apphb.com/installs/traBpUkciP.vscode-npm-scripts.svg)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating/traBpUkciP.vscode-npm-scripts.svg)](https://vsmarketplacebadge.apphb.com/rating/traBpUkciP.vscode-npm-scripts.svg)
 
 **Now supports Workspaces!**
+
+View and run NPM scripts from the sidebar
 
 # Demo
 
@@ -15,6 +18,13 @@ scripts in the projects package.json file. Click on one
 to start it in the console. Each instance gets its own
 console tab based on the script name, so running multiple
 scripts at the same time is no problem.
+
+## Contributors
+
+* zachschuster @(github) - Miscellaneous improvements - PR#1
+* frankMazzarella @(github) - Added script command/text to the tooltip of each TreeItem - PR#6
+
+Thanks a ton, everyone!
 
 ## Configuration
 
