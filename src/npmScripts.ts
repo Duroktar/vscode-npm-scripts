@@ -24,7 +24,7 @@ export class NpmScriptsNodeProvider
   private readonly _onDidChangeTreeData: ScriptEventEmitter = new EventEmitter();
   public readonly onDidChangeTreeData: Event<MaybeScript> = this
     ._onDidChangeTreeData.event;
-  private readonly fileWatcher: FileSystemWatcher;
+  private fileWatcher: FileSystemWatcher;
 
   constructor(private readonly workspaceRoot: string) {
     workspace.workspaceFolders.forEach(folder => {
