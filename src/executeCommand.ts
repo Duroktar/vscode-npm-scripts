@@ -10,6 +10,7 @@ import * as path from "path";
 import * as Message from "./messages";
 import { ConfigOptions, NPM_SCRIPTS } from "./constants";
 import { ITerminalMap } from "./types";
+import { makeTerminalPrettyName } from "./utils";
 
 export function executeCommand(terminalMapping: ITerminalMap) {
   return function(task: string, cwd: string) {
@@ -33,17 +34,15 @@ export function executeCommand(terminalMapping: ITerminalMap) {
         });
     }
 
-    const taskId: string = cwd + ":" + task;
+    const name: string = makeTerminalPrettyName(cwd, task);
     let terminal: Terminal;
-    if (terminalMapping.has(taskId)) {
-      terminal = terminalMapping.get(taskId);
+
+    if (terminalMapping.has(name)) {
+      terminal = terminalMapping.get(name);
     } else {
-      const terminalOptions: TerminalOptions = {
-        cwd,
-        name: `${path.basename(cwd)} ~ ${task}`
-      };
+      const terminalOptions: TerminalOptions = { cwd, name };
       terminal = vscode.window.createTerminal(terminalOptions);
-      terminalMapping.set(taskId, terminal);
+      terminalMapping.set(name, terminal);
     }
 
     terminal.show();

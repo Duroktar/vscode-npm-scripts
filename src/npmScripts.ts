@@ -27,9 +27,11 @@ export class NpmScriptsNodeProvider
   private readonly fileWatcher: FileSystemWatcher;
 
   constructor(private readonly workspaceRoot: string) {
-    // const pattern: string = getPackageJson(this.workspaceRoot);
-    // this.fileWatcher = workspace.createFileSystemWatcher(pattern);
-    // this.fileWatcher.onDidChange(() => this.refresh());
+    workspace.workspaceFolders.forEach(folder => {
+      const pattern: string = getPackageJson(folder.uri.path);
+      this.fileWatcher = workspace.createFileSystemWatcher(pattern);
+      this.fileWatcher.onDidChange(() => this.refresh());
+    });
   }
 
   refresh(): void {
