@@ -3,6 +3,14 @@
 [![Downloads](https://vsmarketplacebadge.apphb.com/installs/traBpUkciP.vscode-npm-scripts.svg)](https://vsmarketplacebadge.apphb.com/installs/traBpUkciP.vscode-npm-scripts.svg)
 [![Rating](https://vsmarketplacebadge.apphb.com/rating/traBpUkciP.vscode-npm-scripts.svg)](https://vsmarketplacebadge.apphb.com/rating/traBpUkciP.vscode-npm-scripts.svg)
 
+## This same functionality is now built in to vscode
+
+Check it out [here](https://code.visualstudio.com/updates/v1_23#_npm-script-running)
+
+----
+
+# Features
+
 **Now supports Workspaces!**
 
 View and run NPM scripts from the sidebar
