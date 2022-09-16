@@ -142,6 +142,7 @@ export class NpmScriptsNodeProvider
     const treeItems: ScriptTreeItem[] = [];
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
     const workspaceDir: string = path.dirname(packageJsonPath);
+    
     const toScript = (
       scriptName: string,
       scriptCommand: string
