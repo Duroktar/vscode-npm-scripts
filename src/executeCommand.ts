@@ -13,6 +13,7 @@ import * as Message from "./messages";
 import { ConfigOptions, NPM_SCRIPTS } from "./constants";
 import { ITerminalMap } from "./types";
 import { makeTerminalPrettyName } from "./utils";
+import { getTernimalAssets } from "./ternimalAssets";
 
 function resolveAutoPackageManager () {
   const rootPath: string = vscode.workspace.rootPath || ".";
@@ -65,7 +66,13 @@ export function executeCommand(terminalMapping: ITerminalMap) {
     if (terminalMapping.has(name)) {
       terminal = terminalMapping.get(name);
     } else {
-      const terminalOptions: TerminalOptions = { cwd, name };
+      const [icon, color] = getTernimalAssets(name);
+      const terminalOptions: TerminalOptions = {
+        cwd,
+        name,
+        iconPath: new vscode.ThemeIcon(icon),
+        color: new vscode.ThemeColor(color),
+      };
       terminal = vscode.window.createTerminal(terminalOptions);
       terminalMapping.set(name, terminal);
     }
